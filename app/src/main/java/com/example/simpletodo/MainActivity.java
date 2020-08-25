@@ -1,9 +1,11 @@
 package com.example.simpletodo;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String KEY_ITEM_TEXT = "item_text";
+    public static final String KEY_ITEM_POSITION = "item_position";
+    public static final int EDIT_TEXT_CODE = 20;
     List <String> item;
     Button btnAdd;
     EditText etItem;
@@ -46,7 +51,18 @@ public class MainActivity extends AppCompatActivity {
                 saveItems();
             }
         };
-         itemAdapter = new ItemAdapter(item, onLongClickListener);
+        ItemAdapter.OnClickListener onClickListener = new ItemAdapter.OnClickListener(){
+
+            @Override
+            public void onItemClicked(int position) {
+                Log.d("MainActivity", "Single click at position" + position);
+                Intent i = new Intent(MainActivity.this, EditActivity.class);
+                i.putExtra(KEY_ITEM_TEXT, item.get(position));
+                i.putExtra(KEY_ITEM_POSITION, position);
+                startActivityForResult(i, EDIT_TEXT_CODE);
+            }
+        };
+        itemAdapter = new ItemAdapter(item, onLongClickListener, onClickListener);
         rvItem.setAdapter(itemAdapter);
         rvItem.setLayoutManager(new LinearLayoutManager(this));
 
@@ -64,6 +80,21 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(resultCode == RESULT_OK && requestCode == EDIT_TEXT_CODE){
+            String itemText = data.getStringExtra(KEY_ITEM_TEXT);
+            int position = data.getExtras().getInt(KEY_ITEM_POSITION);
+            item.set(position, itemText);
+            itemAdapter.notifyItemChanged(position);
+            saveItems();
+            Toast.makeText(getApplicationContext(), "Item updated successfully",Toast.LENGTH_SHORT).show();
+        }else{
+            Log.w("MainActivity", "Unknow call");
+        }
+    }
+
     private File getDataFile(){
         return new File(getFilesDir(), "data.txt");
     }
