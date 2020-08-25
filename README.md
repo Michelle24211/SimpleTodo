@@ -4,7 +4,7 @@ Simple ToDo is an android app that allows building a todo list and basic todo it
 
 Submitted by: **Michelle Lin**
 
-Time spent: **3** hours spent in total
+Time spent: **5** hours spent in total
 
 ## User Stories
 
@@ -16,7 +16,7 @@ The following **required** functionality is completed:
 
 The following **optional** features are implemented:
 
-* [ ] User can **tap a todo item in the list and bring up an edit screen for the todo item** and then have any changes to the text reflected in the todo list
+* [x] User can **tap a todo item in the list and bring up an edit screen for the todo item** and then have any changes to the text reflected in the todo list
 
 The following **additional** features are implemented:
 
@@ -26,13 +26,14 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='WalkThrough.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='WalkThrough.gif' title='Video Walkthrough Basic' width='' alt='Video Walkthrough' />
+<img src='Edit.gif' title='Video Walkthrough Optional' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+Code kept on crashing when clicking on a text. It turned out to be the difference in the button id and the id given in the MainActivity. This mistake led to the crashing of the app and it took some time to find the mistake and fix it.
 
 ## License
 
